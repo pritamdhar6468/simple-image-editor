@@ -1,7 +1,8 @@
-const fileinput = document.querySelector(".file-input"),
-filteroptions=document.querySelectorAll(".filter button");
-previmg=document.querySelector(".preview-img img");
-chooseimgbbutoon=document.querySelector(".choose-img");
+const fileinput = document.querySelector(".file-input");
+const filteroptions=document.querySelectorAll(".filter button");
+const filtername=document.querySelector(".filter-info .name");
+const previmg=document.querySelector(".preview-img img");
+const chooseimgbbutoon=document.querySelector(".choose-img");
 
 
 const loadImg=()=>{
@@ -19,8 +20,9 @@ filteroptions.forEach(option => {
         console.log(option);
         document.querySelector(".filter .active").classList.remove("active");
         option.classList.add("active");
+        filtername.innerText=option.innerText;
     });
-})
+});
 
 fileinput.addEventListener("change",loadImg);
 chooseimgbbutoon.addEventListener("click", () => fileinput.click());
