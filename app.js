@@ -7,6 +7,8 @@ const rotateoptions=document.querySelectorAll(".rotate button");
 const previmg=document.querySelector(".preview-img img");
 const resetfilterbtn=document.querySelector(".reset-filter");
 const chooseimgbbutoon=document.querySelector(".choose-img");
+const saveImgbtn=document.querySelector(".save-img");
+
 
 
 
@@ -99,7 +101,19 @@ const resetfilter = () =>{
     applyfilter();
 }
 
+const saveImage = () =>{
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = previmg.naturalWidth;
+    canvas.height = previmg.naturalHeight;
+
+    ctx.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+    ctx.drawImage(previmg, 0, 0, canvas.width, canvas.height);
+    document.body.appendChild(canvas);
+}
+
 fileinput.addEventListener("change",loadImg);
 filterslider.addEventListener("input",updatefilter);
 resetfilterbtn.addEventListener("click",resetfilter);
+saveImgbtn.addEventListener("click",saveImage);
 chooseimgbbutoon.addEventListener("click", () => fileinput.click());
