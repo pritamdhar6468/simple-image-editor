@@ -26,6 +26,7 @@ const loadImg=()=>{
     if(!file) return;
     previmg.src=URL.createObjectURL(file);
     previmg.addEventListener("load", () =>{
+        resetfilterbtn.click();
         document.querySelector(".container").classList.remove("disable");
     });
 }
@@ -108,8 +109,17 @@ const saveImage = () =>{
     canvas.height = previmg.naturalHeight;
 
     ctx.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
-    ctx.drawImage(previmg, 0, 0, canvas.width, canvas.height);
-    document.body.appendChild(canvas);
+    ctx.translate(canvas.width/2, canvas.height/2);
+    if(rotate != 0){
+        ctx.rotate(rotate*Math.PI/180);
+    }
+    ctx.scale(fliphorizontal, flipvertical);
+    ctx.drawImage(previmg, -canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
+    
+    const link = document.createElement("a");
+    link.download = "image.jpg";
+    link.href = canvas.toDataURL();
+    link.click();
 }
 
 fileinput.addEventListener("change",loadImg);
